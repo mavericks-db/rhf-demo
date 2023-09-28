@@ -10,7 +10,8 @@ type FormValues = {
   social: {
     twitter: string;
     facebook: string;
-  }
+  };
+  phoneNumbers: string[];
 };
 
 export const YouTubeForm = () => {
@@ -28,6 +29,7 @@ export const YouTubeForm = () => {
           twitter: "",
           facebook: "",
         },
+        phoneNumbers: ["", ""],
       };
     },
   });
@@ -95,25 +97,44 @@ export const YouTubeForm = () => {
           <p className="error">{errors.channel?.message}</p>
         </div>
 
-   <div className="form-control">
+        <div className="form-control">
           <label htmlFor="twitter">Twitter</label>
-          <input
-            type="text"
-            id="twitter"
-            {...register("social.twitter")}
-          />
+          <input type="text" id="twitter" {...register("social.twitter", {
+            required: "Twitter is required"
+          })} />
+          <p className="error">{errors.social?.twitter?.message}</p>
         </div>
 
-  <div className="form-control">
+        <div className="form-control">
           <label htmlFor="facebook">Facebook</label>
-          <input
-            type="text"
-            id="facebook"
-            {...register("social.facebook")}
-          />
+          <input type="text" id="facebook" {...register("social.facebook", {
+            required: "Facebook is required"
+          })} />
+          <p className="error">{errors.social?.facebook?.message}</p>
         </div>
 
+        <div className="form-control">
+          <label htmlFor="primary-phone">Primary phone number</label>
+          <input
+            type="text"
+            id="primary-phone"
+            {...register("phoneNumbers.0", {
+              required: "Primary phone number is required"
+            })}
+          />
+          <p className="error">{errors.phoneNumbers?.[0]?.message}</p>
+        </div>
 
+        <div className="form-control">
+          <label htmlFor="secondary-phone">Secondary phone number</label>
+          <input
+            type="text"
+            id="secondary-phone"
+            {...register("phoneNumbers.1", {required: "Secondary phone number is required"})}
+          />
+            <p className="error">{errors.phoneNumbers?.[1]?.message}</p>
+
+        </div>
 
         <button>Submit</button>
       </form>
